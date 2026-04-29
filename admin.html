@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Golden Clean | Panel de Administración</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+
+:root{
+  --blue:#0B2046;
+  --gold:#D4AF37;
+  --light:#F8F9FA;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--light);
+  margin:0;
+  min-height:100vh;
+}
+
+/* LOGIN */
+#loginScreen{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0B2046 0%,#07142c 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.login-card{
+  background:#fff;
+  border-radius:28px;
+  padding:48px 40px;
+  width:100%;
+  max-width:400px;
+  box-shadow:0 40px 80px rgba(0,0,0,0.25);
+}
+
+/* ADMIN */
+#adminScreen{ display:none; }
+
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:var(--blue);
+  position:fixed;
+  top:0;
+  left:0;
+  display:flex;
+  flex-direction:column;
+  z-index:100;
+}
+
+.main-content{
+  margin-left:260px;
+  padding:32px;
+  min-height:100vh;
+}
+
+.form-card{
+  background:#fff;
+  border-radius:20px;
+  padding:32px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.06);
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:20px;
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  color:#374151;
+}
+
+input, select, textarea{
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  padding:11px 16px;
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  outline:none;
+  transition:border .2s;
+  background:#fff;
+  color:#111;
+}
+
+input:focus, select:focus{
+  border-color:#0B2046;
+}
+
+.btn-primary{
+  background:#0B2046;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:13px 28px;
+  font-family:'Poppins',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btn-primary:hover{ background:#0d2a5a; }
+
+.btn-gold{
+  background:#D4AF37;
+  color:#0B2046;
+  border:none;
+  border-radius:12px;
+  padding:13px 28px;
+  font-family:'Poppins',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.btn-gold:hover{ background:#c9a630; }
+
+.btn-danger{
+  background:#fee2e2;
+  color:#dc2626;
+  border:none;
+  border-radius:8px;
+  padding:6px 12px;
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  cursor:pointer;
+  transition:background .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.btn-danger:hover{ background:#fecaca; }
+
+.btn-edit{
+  background:#e0e7ff;
+  color:#3730a3;
+  border:none;
+  border-radius:8px;
+  padding:6px 12px;
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  cursor:pointer;
+  transition:background .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.btn-edit:hover{ background:#c7d2fe; }
+
+.product-row{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:16px;
+  border:1px solid #f0f0f0;
+  border-radius:14px;
+  background:#fafafa;
+  margin-bottom:10px;
+  transition:box-shadow .2s;
+}
+
+.product-row:hover{
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+
+.stat-card{
+  background:#fff;
+  border-radius:16px;
+  padding:20px 24px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.code-output{
+  background:#0d1117;
+  color:#e6edf3;
+  border-radius:14px;
+  padding:24px;
+  font-family:'Courier New',monospace;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre;
+  overflow-x:auto;
+  max-height:480px;
+  overflow-y:auto;
+}
+
+.code-output .kw{ color:#ff7b72; }
+.code-output .str{ color:#a5d6ff; }
+.code-output .num{ color:#79c0ff; }
+.code-output .key{ color:#d2a8ff; }
+.code-output .comment{ color:#8b949e; }
+
+.toast{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  background:#0B2046;
+  color:#fff;
+  padding:14px 22px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:600;
+  z-index:9999;
+  opacity:0;
+  transform:translateY(20px);
+  transition:all .35s ease;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 20px;
+  color:rgba(255,255,255,0.65);
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  border-radius:10px;
+  margin:2px 8px;
+  transition:all .2s;
+  text-decoration:none;
+}
+
+.nav-item:hover, .nav-item.active{
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+}
+
+.nav-item i{ width:18px; text-align:center; }
+
+.section{ display:none; }
+.section.active{ display:block; }
+
+.badge-cat{
+  font-size:11px;
+  font-weight:700;
+  padding:3px 10px;
+  border-radius:20px;
+}
+
+.badge-hogar{ background:#e0fdf4; color:#065f46; }
+.badge-industrial{ background:#eff6ff; color:#1e40af; }
+.badge-mayoristas{ background:#fef9c3; color:#713f12; }
+
+@media(max-width:768px){
+  .sidebar{ width:100%; min-height:auto; position:relative; flex-direction:row; flex-wrap:wrap; padding:16px; }
+  .main-content{ margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toastMsg">Accion completada</span>
+</div>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="text-center mb-8">
+      <img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg"
+        class="w-20 h-20 rounded-full border-4 border-yellow-400 mx-auto mb-4">
+      <h1 class="font-black text-2xl text-[#0B2046]">GOLDEN CLEAN</h1>
+      <p class="text-sm text-gray-400 font-semibold mt-1">Panel de Administracion</p>
+    </div>
+
+    <div id="loginError" class="hidden bg-red-50 text-red-600 text-sm font-semibold px-4 py-3 rounded-xl mb-5 flex items-center gap-2">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Usuario o contrasena incorrectos</span>
+    </div>
+
+    <div class="form-group">
+      <label for="loginUser">
+        <i class="fa-solid fa-user mr-1"></i>Usuario
+      </label>
+      <input type="text" id="loginUser" placeholder="Ingresa tu usuario" autocomplete="off">
+    </div>
+
+    <div class="form-group mb-8">
+      <label for="loginPass">
+        <i class="fa-solid fa-lock mr-1"></i>Contrasena
+      </label>
+      <div class="relative">
+        <input type="password" id="loginPass" placeholder="Ingresa tu contrasena" style="width:100%;padding-right:44px;"
+          onkeydown="if(event.key==='Enter')doLogin()">
+        <button onclick="togglePass()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;">
+          <i id="passEye" class="fa-solid fa-eye"></i>
+        </button>
+      </div>
+    </div>
+
+    <button onclick="doLogin()" class="btn-primary w-full justify-center">
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+      Ingresar
+    </button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminScreen">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="p-6 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg" class="w-10 h-10 rounded-full border-2 border-yellow-400">
+        <div>
+          <p class="font-black text-white text-sm">GOLDEN CLEAN</p>
+          <p class="text-xs text-white/50">Administrador</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-4">
+      <a class="nav-item active" data-section="secProducts" onclick="showSection('secProducts',this)">
+        <i class="fa-solid fa-box"></i>Productos
+      </a>
+      <a class="nav-item" data-section="secAdd" onclick="showSection('secAdd',this)">
+        <i class="fa-solid fa-circle-plus"></i>Agregar Producto
+      </a>
+      <a class="nav-item" data-section="secCode" onclick="showSection('secCode',this)">
+        <i class="fa-solid fa-code"></i>Exportar Codigo
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-white/10">
+      <button onclick="doLogout()" class="nav-item w-full text-red-400 hover:text-red-300 hover:bg-red-900/20">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar Sesion
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- STATS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 font-semibold">Total productos</p>
+        <p class="text-2xl font-black text-[#0B2046]" id="statTotal">0</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 font-semibold">Hogar</p>
+        <p class="text-2xl font-black text-emerald-600" id="statHogar">0</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 font-semibold">Industrial</p>
+        <p class="text-2xl font-black text-blue-600" id="statInd">0</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 font-semibold">Mayoristas</p>
+        <p class="text-2xl font-black text-amber-500" id="statMay">0</p>
+      </div>
+    </div>
+
+    <!-- SECTION: PRODUCTS LIST -->
+    <div id="secProducts" class="section active">
+      <div class="form-card">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-black text-xl text-[#0B2046]">
+            <i class="fa-solid fa-boxes-stacked mr-2 text-[#D4AF37]"></i>Lista de Productos
+          </h2>
+          <button onclick="showSection('secAdd', document.querySelector('[data-section=secAdd]'))"
+            class="btn-primary text-sm px-4 py-2">
+            <i class="fa-solid fa-plus"></i>Nuevo
+          </button>
+        </div>
+
+        <div id="productList">
+          <div class="text-center py-12 text-gray-300">
+            <i class="fa-solid fa-box-open text-4xl mb-3 block"></i>
+            <p class="text-gray-400 font-semibold">No hay productos registrados</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: ADD PRODUCT -->
+    <div id="secAdd" class="section">
+      <div class="form-card">
+        <h2 class="font-black text-xl text-[#0B2046] mb-6">
+          <i class="fa-solid fa-circle-plus mr-2 text-[#D4AF37]"></i>
+          <span id="formTitle">Agregar Producto</span>
+        </h2>
+
+        <input type="hidden" id="editId" value="">
+
+        <div class="grid md:grid-cols-2 gap-x-6">
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-barcode mr-1"></i>Codigo</label>
+            <input type="text" id="fCode" placeholder="Ej: GC-005">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-tag mr-1"></i>Nombre del Producto</label>
+            <input type="text" id="fName" placeholder="Ej: Limpiador Multiusos">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-flask mr-1"></i>Presentacion / Tamano</label>
+            <input type="text" id="fSize" placeholder="Ej: 500 ml, 1 Lt, Unidad">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-dollar-sign mr-1"></i>Precio (COP)</label>
+            <input type="number" id="fPrice" placeholder="Ej: 12500" min="0">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-star mr-1"></i>Etiqueta</label>
+            <input type="text" id="fTag" placeholder="Ej: Mas vendido, Premium, Nuevo">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-layer-group mr-1"></i>Categoria</label>
+            <select id="fCategory">
+              <option value="">Seleccionar categoria</option>
+              <option value="hogar">Hogar</option>
+              <option value="industrial">Industrial</option>
+              <option value="mayoristas">Mayoristas</option>
+            </select>
+          </div>
+
+          <div class="form-group md:col-span-2">
+            <label><i class="fa-solid fa-image mr-1"></i>URL de Imagen</label>
+            <input type="text" id="fImage" placeholder="https://... (Google Drive o enlace directo)">
+          </div>
+
+        </div>
+
+        <div id="formError" class="hidden bg-red-50 text-red-600 text-sm font-semibold px-4 py-3 rounded-xl mb-5 flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span id="formErrorMsg">Completa todos los campos obligatorios</span>
+        </div>
+
+        <div class="flex gap-3 flex-wrap">
+          <button onclick="saveProduct()" class="btn-primary">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span id="saveBtnText">Guardar Producto</span>
+          </button>
+          <button onclick="resetForm()" class="btn-gold">
+            <i class="fa-solid fa-rotate-left"></i>Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: CODE EXPORT -->
+    <div id="secCode" class="section">
+      <div class="form-card">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <h2 class="font-black text-xl text-[#0B2046]">
+            <i class="fa-solid fa-code mr-2 text-[#D4AF37]"></i>Codigo Exportado
+          </h2>
+          <div class="flex gap-3">
+            <button onclick="copyCode()" class="btn-primary text-sm px-4 py-2">
+              <i class="fa-solid fa-copy"></i>Copiar
+            </button>
+            <button onclick="downloadCode()" class="btn-gold text-sm px-4 py-2">
+              <i class="fa-solid fa-download"></i>Descargar .txt
+            </button>
+          </div>
+        </div>
+
+        <div id="codeOutput" class="code-output"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const USER_OK = "GoldenClean";
+const PASS_OK = "Golden2026";
+
+let products = JSON.parse(localStorage.getItem("gcProducts") || "[]");
+let nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+let editingId = null;
+
+/* ---- LOGIN ---- */
+function doLogin(){
+  const u = document.getElementById("loginUser").value.trim();
+  const p = document.getElementById("loginPass").value;
+  if(u === USER_OK && p === PASS_OK){
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminScreen").style.display = "block";
+    renderAll();
+  } else {
+    document.getElementById("loginError").classList.remove("hidden");
+    document.getElementById("loginUser").style.borderColor = "#dc2626";
+    document.getElementById("loginPass").style.borderColor = "#dc2626";
+  }
+}
+
+function doLogout(){
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("adminScreen").style.display = "none";
+  document.getElementById("loginUser").value = "";
+  document.getElementById("loginPass").value = "";
+  document.getElementById("loginError").classList.add("hidden");
+  document.getElementById("loginUser").style.borderColor = "#e5e7eb";
+  document.getElementById("loginPass").style.borderColor = "#e5e7eb";
+}
+
+function togglePass(){
+  const inp = document.getElementById("loginPass");
+  const eye = document.getElementById("passEye");
+  if(inp.type === "password"){
+    inp.type = "text";
+    eye.className = "fa-solid fa-eye-slash";
+  } else {
+    inp.type = "password";
+    eye.className = "fa-solid fa-eye";
+  }
+}
+
+/* ---- NAVIGATION ---- */
+function showSection(id, el){
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(el) el.classList.add("active");
+  if(id === "secCode") renderCode();
+}
+
+/* ---- STATS ---- */
+function updateStats(){
+  document.getElementById("statTotal").innerText = products.length;
+  document.getElementById("statHogar").innerText = products.filter(p=>p.category==="hogar").length;
+  document.getElementById("statInd").innerText = products.filter(p=>p.category==="industrial").length;
+  document.getElementById("statMay").innerText = products.filter(p=>p.category==="mayoristas").length;
+}
+
+/* ---- PRODUCTS LIST ---- */
+function renderList(){
+  const wrap = document.getElementById("productList");
+  if(products.length === 0){
+    wrap.innerHTML = `<div class="text-center py-12 text-gray-300">
+      <i class="fa-solid fa-box-open text-4xl mb-3 block"></i>
+      <p class="text-gray-400 font-semibold">No hay productos registrados</p>
+    </div>`;
+    return;
+  }
+  wrap.innerHTML = products.map(p => `
+    <div class="product-row">
+      <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
+        ${p.image && p.image.startsWith("http")
+          ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`
+          : `<i class="fa-solid fa-flask text-gray-300"></i>`}
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-black text-[#0B2046] text-sm">${p.name}</span>
+          <span class="badge-cat badge-${p.category}">${p.category}</span>
+        </div>
+        <p class="text-xs text-gray-400 font-mono mt-0.5">${p.code} &middot; ${p.size}</p>
+        <p class="text-sm font-bold text-[#0B2046] mt-1">$${Number(p.price).toLocaleString("es-CO")}</p>
+      </div>
+      <div class="flex gap-2 flex-shrink-0">
+        <button onclick="editProduct(${p.id})" class="btn-edit">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button onclick="deleteProduct(${p.id})" class="btn-danger">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---- SAVE / EDIT ---- */
+function saveProduct(){
+  const code = document.getElementById("fCode").value.trim();
+  const name = document.getElementById("fName").value.trim();
+  const size = document.getElementById("fSize").value.trim();
+  const price = document.getElementById("fPrice").value.trim();
+  const tag = document.getElementById("fTag").value.trim();
+  const category = document.getElementById("fCategory").value;
+  const image = document.getElementById("fImage").value.trim() || "PEGA_LINK_GOOGLE_DRIVE_AQUI";
+
+  if(!code || !name || !size || !price || !tag || !category){
+    document.getElementById("formError").classList.remove("hidden");
+    document.getElementById("formErrorMsg").innerText = "Completa todos los campos obligatorios";
+    return;
+  }
+
+  document.getElementById("formError").classList.add("hidden");
+
+  if(editingId !== null){
+    const idx = products.findIndex(p => p.id === editingId);
+    if(idx > -1){
+      products[idx] = { id: editingId, code, name, size, price: Number(price), tag, category, image };
+    }
+    editingId = null;
+    document.getElementById("formTitle").innerText = "Agregar Producto";
+    document.getElementById("saveBtnText").innerText = "Guardar Producto";
+    showToast("Producto actualizado correctamente");
+  } else {
+    products.push({ id: nextId++, code, name, size, price: Number(price), tag, category, image });
+    showToast("Producto agregado correctamente");
+  }
+
+  localStorage.setItem("gcProducts", JSON.stringify(products));
+  resetForm();
+  renderAll();
+  showSection("secProducts", document.querySelector("[data-section=secProducts]"));
+}
+
+function editProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  editingId = id;
+  document.getElementById("fCode").value = p.code;
+  document.getElementById("fName").value = p.name;
+  document.getElementById("fSize").value = p.size;
+  document.getElementById("fPrice").value = p.price;
+  document.getElementById("fTag").value = p.tag;
+  document.getElementById("fCategory").value = p.category;
+  document.getElementById("fImage").value = p.image === "PEGA_LINK_GOOGLE_DRIVE_AQUI" ? "" : p.image;
+  document.getElementById("formTitle").innerText = "Editar Producto";
+  document.getElementById("saveBtnText").innerText = "Actualizar Producto";
+  showSection("secAdd", document.querySelector("[data-section=secAdd]"));
+}
+
+function deleteProduct(id){
+  if(!confirm("Seguro que deseas eliminar este producto?")) return;
+  products = products.filter(p => p.id !== id);
+  localStorage.setItem("gcProducts", JSON.stringify(products));
+  renderAll();
+  showToast("Producto eliminado");
+}
+
+function resetForm(){
+  ["fCode","fName","fSize","fPrice","fTag","fImage"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  document.getElementById("fCategory").value = "";
+  document.getElementById("formError").classList.add("hidden");
+  editingId = null;
+  document.getElementById("formTitle").innerText = "Agregar Producto";
+  document.getElementById("saveBtnText").innerText = "Guardar Producto";
+}
+
+/* ---- CODE EXPORT ---- */
+function buildCodeString(){
+  if(products.length === 0) return "const products = [];";
+  const lines = products.map((p, i) => {
+    const comma = i < products.length - 1 ? "," : "";
+    return [
+      "  {",
+      `    id: ${p.id},`,
+      `    code: "${p.code}",`,
+      `    name: "${p.name}",`,
+      `    size: "${p.size}",`,
+      `    price: ${p.price},`,
+      `    tag: "${p.tag}",`,
+      `    category: "${p.category}",`,
+      `    image: "${p.image}"`,
+      `  }${comma}`
+    ].join("\n");
+  });
+  return `const products = [\n${lines.join("\n")}\n];`;
+}
+
+function renderCode(){
+  const raw = buildCodeString();
+  const highlighted = raw
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/(const|let|var)/g,'<span class="kw">$1</span>')
+    .replace(/("(?:[^"\\]|\\.)*")/g,'<span class="str">$1</span>')
+    .replace(/\b(\d+)\b(?=,?\s*$|\s*\})/gm,'<span class="num">$1</span>')
+    .replace(/(id|code|name|size|price|tag|category|image):/g,'<span class="key">$1</span>:');
+  document.getElementById("codeOutput").innerHTML = highlighted;
+}
+
+function copyCode(){
+  const text = buildCodeString();
+  navigator.clipboard.writeText(text).then(() => showToast("Codigo copiado al portapapeles"));
+}
+
+function downloadCode(){
+  const text = buildCodeString();
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "golden-clean-products.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("Archivo descargado");
+}
+
+/* ---- TOAST ---- */
+function showToast(msg){
+  const t = document.getElementById("toast");
+  document.getElementById("toastMsg").innerText = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+/* ---- RENDER ALL ---- */
+function renderAll(){
+  renderList();
+  updateStats();
+}
+</script>
+
+</body>
+</html>
