@@ -29,394 +29,594 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
 
 :root{
---blue:#0B2046;
---gold:#D4AF37;
---light:#F8F9FA;
+  --blue:#0B2046;
+  --gold:#D4AF37;
+  --light:#F8F9FA;
 }
 
 body{
-font-family:'Poppins',sans-serif;
-background:var(--light);
-scroll-behavior:smooth;
+  font-family:'Poppins',sans-serif;
+  background:var(--light);
+  scroll-behavior:smooth;
 }
 
 .hero{
-background:linear-gradient(135deg,#0B2046 0%,#07142c 100%);
+  background:linear-gradient(135deg,#0B2046 0%,#07142c 100%);
 }
 
 .card{
-transition:all .35s ease;
+  transition:all .35s ease;
 }
 
 .card:hover{
-transform:translateY(-8px);
-box-shadow:0 20px 40px rgba(0,0,0,.08);
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
 }
 
 .glass{
-background:rgba(255,255,255,.88);
-backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(14px);
 }
 
 #cartDrawer{
-position:fixed;
-top:0;
-right:-100%;
-width:100%;
-max-width:440px;
-height:100vh;
-background:#fff;
-z-index:999;
-transition:.45s ease;
-box-shadow:-20px 0 50px rgba(0,0,0,.12);
-display:flex;
-flex-direction:column;
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:100%;
+  max-width:440px;
+  height:100vh;
+  background:#fff;
+  z-index:999;
+  transition:.45s ease;
+  box-shadow:-20px 0 50px rgba(0,0,0,.12);
+  display:flex;
+  flex-direction:column;
 }
 
 #cartDrawer.open{ right:0; }
 
 .whatsapp-float{
-position:fixed;
-right:18px;
-bottom:18px;
-z-index:998;
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:998;
+  transition:opacity .3s ease, transform .3s ease;
+}
+
+.whatsapp-float.hidden-float{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(0.7);
 }
 
 .badge{
-font-size:11px;
-font-weight:700;
-padding:6px 12px;
-border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  padding:6px 12px;
+  border-radius:999px;
 }
 
 .no-scroll::-webkit-scrollbar{ display:none; }
 
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:998;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+
+.overlay.active{
+  opacity:1;
+  pointer-events:all;
+}
+
+.category-btn{
+  transition:all .2s ease;
+  cursor:pointer;
+}
+
+.category-btn.active{
+  background:#0B2046;
+  color:#fff;
+}
+
+.qty-btn{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:16px;
+  transition:background .2s;
+  cursor:pointer;
+  border:none;
+  outline:none;
+}
+
+.qty-btn:hover{ background:#e0e0e0; }
+
+.cart-item-row{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  border:1px solid #f0f0f0;
+  border-radius:16px;
+  padding:14px;
+  background:#fafafa;
+}
+
+.cart-item-info{
+  flex:1;
+  min-width:0;
+}
+
+.cart-item-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+
 @media(max-width:768px){
-.hero-title{font-size:36px;}
+  .hero-title{font-size:36px;}
 }
 </style>
 </head>
 
 <body>
 
+<!-- OVERLAY PARA CERRAR CARRITO -->
+<div id="overlay" class="overlay" onclick="toggleCart()"></div>
+
 <header class="bg-white sticky top-0 z-50 shadow-sm">
-<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
 
-<div class="flex items-center gap-3">
-<img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg" class="w-12 h-12 rounded-full border-2 border-yellow-500">
-<div>
-<h1 class="font-black text-xl text-[#0B2046]">GOLDEN CLEAN</h1>
-<p class="text-xs text-gray-400 font-semibold">Villavicencio, Meta y alrededores</p>
-</div>
-</div>
+    <div class="flex items-center gap-3">
+      <img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg" class="w-12 h-12 rounded-full border-2 border-yellow-500">
+      <div>
+        <h1 class="font-black text-xl text-[#0B2046]">GOLDEN CLEAN</h1>
+        <p class="text-xs text-gray-400 font-semibold">Villavicencio, Meta y alrededores</p>
+      </div>
+    </div>
 
-<div class="hidden md:flex flex-1 max-w-md">
-<div class="relative w-full">
-<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-<input id="searchInput" onkeyup="renderProducts()" type="text" placeholder="Buscar producto..."
-class="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-3 outline-none">
-</div>
-</div>
+    <div class="hidden md:flex flex-1 max-w-md">
+      <div class="relative w-full">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <input id="searchInput" onkeyup="renderProducts()" type="text" placeholder="Buscar producto..."
+          class="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-3 outline-none">
+      </div>
+    </div>
 
-<div class="flex items-center gap-3">
+    <div class="flex items-center gap-3">
 
-<a href="https://wa.me/573153544360" target="_blank"
-class="hidden md:flex bg-[#0B2046] text-white px-5 py-3 rounded-xl font-bold">
-WhatsApp
-</a>
+      <a href="https://wa.me/573153544360" target="_blank"
+        class="hidden md:flex items-center gap-2 bg-[#0B2046] text-white px-5 py-3 rounded-xl font-bold">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        WhatsApp
+      </a>
 
-<!-- BOTÓN WHATSAPP DIRECTO (ENVÍA CARRITO) -->
-<button onclick="sendCartWhatsApp()"
-class="bg-green-600 text-white px-4 py-3 rounded-xl font-bold">
-WhatsApp Pedido
-</button>
+      <button onclick="toggleCart()"
+        class="relative bg-[#0B2046] text-white w-12 h-12 rounded-2xl flex items-center justify-center">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cartCount"
+          class="absolute -top-2 -right-2 bg-[#D4AF37] text-[#0B2046] text-xs font-black w-6 h-6 rounded-full flex items-center justify-center">0</span>
+      </button>
 
-<button onclick="toggleCart()"
-class="relative bg-[#0B2046] text-white w-12 h-12 rounded-2xl">
-<i class="fa-solid fa-cart-shopping"></i>
-<span id="cartCount"
-class="absolute -top-2 -right-2 bg-[#D4AF37] text-[#0B2046] text-xs font-black w-6 h-6 rounded-full flex items-center justify-center">0</span>
-</button>
-
-</div>
-</div>
+    </div>
+  </div>
 </header>
 
 <section class="hero text-white">
-<div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+  <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
 
-<div>
-<div class="badge bg-white text-[#0B2046] inline-block">
-Calidad Profesional
-</div>
+    <div>
+      <div class="badge bg-white text-[#0B2046] inline-block">
+        Calidad Profesional
+      </div>
 
-<h2 class="hero-title text-5xl font-black mt-6 leading-tight">
-Soluciones de Limpieza para Hogar, Industria y Mayoristas
-</h2>
+      <h2 class="hero-title text-5xl font-black mt-6 leading-tight">
+        Soluciones de Limpieza para Hogar, Industria y Mayoristas
+      </h2>
 
-<p class="mt-6 text-white/80 text-lg">
-Atendemos Villavicencio, Meta y alrededores.
-</p>
+      <p class="mt-6 text-white/80 text-lg">
+        Atendemos Villavicencio, Meta y alrededores.
+      </p>
+    </div>
 
-</div>
+    <div class="glass rounded-3xl p-10 text-center">
+      <img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg"
+        class="w-60 h-60 rounded-full mx-auto border-4 border-yellow-500">
+    </div>
 
-<div class="glass rounded-3xl p-10 text-center">
-<img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg"
-class="w-60 h-60 rounded-full mx-auto border-4 border-yellow-500">
-</div>
-
-</div>
+  </div>
 </section>
 
 <!-- CATEGORÍAS -->
 <section class="py-10">
-<div class="max-w-7xl mx-auto px-6 text-center">
+  <div class="max-w-7xl mx-auto px-6 text-center">
 
-<div class="flex flex-wrap justify-center gap-4">
+    <div class="flex flex-wrap justify-center gap-3">
+      <button onclick="setCategory('all')" class="category-btn active bg-[#0B2046] text-white px-6 py-2 rounded-xl font-bold" data-cat="all">
+        <i class="fa-solid fa-border-all mr-2"></i>Todos
+      </button>
+      <button onclick="setCategory('hogar')" class="category-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-xl font-bold" data-cat="hogar">
+        <i class="fa-solid fa-house mr-2"></i>Hogar
+      </button>
+      <button onclick="setCategory('industrial')" class="category-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-xl font-bold" data-cat="industrial">
+        <i class="fa-solid fa-industry mr-2"></i>Industrial
+      </button>
+      <button onclick="setCategory('mayoristas')" class="category-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-xl font-bold" data-cat="mayoristas">
+        <i class="fa-solid fa-boxes-stacked mr-2"></i>Mayoristas
+      </button>
+    </div>
 
-<button onclick="setCategory('all')" class="bg-[#0B2046] text-white px-6 py-2 rounded-xl font-bold">Todos</button>
-<button onclick="setCategory('hogar')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Hogar</button>
-<button onclick="setCategory('industrial')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Industrial</button>
-<button onclick="setCategory('mayoristas')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Mayoristas</button>
-
-</div>
-
-</div>
+  </div>
 </section>
 
 <section class="py-20">
-<div class="max-w-7xl mx-auto px-6">
-
-<div id="productGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div id="productGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+  </div>
 </section>
 
-<!-- FOOTER (RESTAURADO COMO PEDISTE) -->
+<!-- FOOTER -->
 <footer class="bg-[#0B2046] text-white py-12">
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
 
-<div>
-<h3 class="font-black text-xl">Golden Clean</h3>
-<p class="text-sm text-white/70 mt-3">
-Villavicencio, Meta y alrededores.
-</p>
-</div>
+    <div>
+      <h3 class="font-black text-xl">Golden Clean</h3>
+      <p class="text-sm text-white/70 mt-3">
+        Villavicencio, Meta y alrededores.
+      </p>
+    </div>
 
-<div>
-<h3 class="font-black">Cobertura</h3>
-<p class="text-sm text-white/70 mt-3">
-Villavicencio, Acacías, Restrepo, Cumaral y municipios cercanos.
-</p>
-</div>
+    <div>
+      <h3 class="font-black">Cobertura</h3>
+      <p class="text-sm text-white/70 mt-3">
+        Villavicencio, Acacias, Restrepo, Cumaral y municipios cercanos.
+      </p>
+    </div>
 
-<div>
-<h3 class="font-black">Horario</h3>
-<p class="text-sm text-white/70 mt-3">
-Lunes a Sábado<br>8:00 AM - 6:00 PM
-</p>
-</div>
+    <div>
+      <h3 class="font-black">Horario</h3>
+      <p class="text-sm text-white/70 mt-3">
+        Lunes a Sabado<br>8:00 AM - 6:00 PM
+      </p>
+    </div>
 
-</div>
+  </div>
 </footer>
 
-<!-- CART -->
+<!-- BOTÓN FLOTANTE WHATSAPP (único, se oculta si carrito está abierto) -->
+<div class="whatsapp-float" id="waFloat">
+  <a href="https://wa.me/573153544360" target="_blank"
+    class="flex items-center justify-center w-14 h-14 bg-green-500 text-white rounded-full shadow-xl hover:bg-green-600 transition-colors">
+    <i class="fa-brands fa-whatsapp text-2xl"></i>
+  </a>
+</div>
+
+<!-- CART DRAWER -->
 <div id="cartDrawer">
 
-<div class="p-6 bg-[#0B2046] text-white flex justify-between items-center">
-<div>
-<h3 class="font-black text-2xl">Carrito</h3>
-<p class="text-xs text-white/70">Pedido Golden Clean</p>
-</div>
+  <div class="p-6 bg-[#0B2046] text-white flex justify-between items-center">
+    <div>
+      <h3 class="font-black text-2xl">Carrito</h3>
+      <p class="text-xs text-white/70">Pedido Golden Clean</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="clearCart()"
+        class="text-xs text-white/60 hover:text-white border border-white/20 px-3 py-2 rounded-xl transition-colors flex items-center gap-1">
+        <i class="fa-solid fa-trash-can text-xs"></i>
+        Vaciar
+      </button>
+      <button onclick="toggleCart()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
 
-<button onclick="toggleCart()" class="w-10 h-10 rounded-xl bg-white/10">
-<i class="fa-solid fa-xmark"></i>
-</button>
-</div>
+  <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-3 no-scroll"></div>
 
-<div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4 no-scroll"></div>
+  <div class="p-6 border-t bg-white">
+    <div class="flex justify-between mb-2">
+      <span class="text-sm text-gray-400">Total unidades</span>
+      <span id="cartUnits" class="text-sm font-semibold text-gray-600">0</span>
+    </div>
+    <div class="flex justify-between mb-5">
+      <span class="font-semibold text-gray-700">Total a pagar</span>
+      <span id="cartTotal" class="font-black text-2xl text-[#0B2046]">$0</span>
+    </div>
 
-<div class="p-6 border-t">
-<div class="flex justify-between mb-4">
-<span class="font-semibold">Total</span>
-<span id="cartTotal" class="font-black text-2xl text-[#0B2046]">$0</span>
-</div>
-
-<button onclick="sendCartWhatsApp()"
-class="w-full bg-green-600 text-white py-4 rounded-2xl font-black">
-Enviar Pedido
-</button>
-</div>
+    <button onclick="sendCartWhatsApp()"
+      class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-colors">
+      <i class="fa-brands fa-whatsapp text-xl"></i>
+      Enviar Pedido por WhatsApp
+    </button>
+  </div>
 
 </div>
 
 <script>
-const WHATSAPP="573153544360";
+const WHATSAPP = "573153544360";
 
-let cart=[];
-let category="all";
+let cart = [];
+let category = "all";
 
-const products=[
-{
-id:1,
-code:"GC-001",
-name:"Lavaloza Limón",
-size:"500 ml",
-price:5800,
-tag:"Más vendido",
-category:"hogar",
-image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
-},
-{
-id:2,
-code:"GC-002",
-name:"Desinfectante Galón",
-size:"4000 ml",
-price:24000,
-tag:"Empresas",
-category:"industrial",
-image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
-},
-{
-id:3,
-code:"GC-003",
-name:"Jabón Manos Avena",
-size:"850 ml",
-price:9200,
-tag:"Premium",
-category:"hogar",
-image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
-},
-{
-id:4,
-code:"GC-004",
-name:"Trapeador Microfibra",
-size:"Unidad",
-price:16500,
-tag:"Mayoristas",
-category:"mayoristas",
-image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
-}
+const products = [
+  {
+    id: 1,
+    code: "GC-001",
+    name: "Lavaloza Limon",
+    size: "500 ml",
+    price: 5800,
+    tag: "Mas vendido",
+    category: "hogar",
+    image: "PEGA_LINK_GOOGLE_DRIVE_AQUI"
+  },
+  {
+    id: 2,
+    code: "GC-002",
+    name: "Desinfectante Galon",
+    size: "4000 ml",
+    price: 24000,
+    tag: "Empresas",
+    category: "industrial",
+    image: "PEGA_LINK_GOOGLE_DRIVE_AQUI"
+  },
+  {
+    id: 3,
+    code: "GC-003",
+    name: "Jabon Manos Avena",
+    size: "850 ml",
+    price: 9200,
+    tag: "Premium",
+    category: "hogar",
+    image: "PEGA_LINK_GOOGLE_DRIVE_AQUI"
+  },
+  {
+    id: 4,
+    code: "GC-004",
+    name: "Trapeador Microfibra",
+    size: "Unidad",
+    price: 16500,
+    tag: "Mayoristas",
+    category: "mayoristas",
+    image: "PEGA_LINK_GOOGLE_DRIVE_AQUI"
+  }
 ];
 
-function money(v){
-return "$"+v.toLocaleString("es-CO");
+function money(v) {
+  return "$" + v.toLocaleString("es-CO");
 }
 
-function setCategory(c){
-category=c;
-renderProducts();
+function setCategory(c) {
+  category = c;
+  document.querySelectorAll(".category-btn").forEach(btn => {
+    if (btn.dataset.cat === c) {
+      btn.classList.add("active", "bg-[#0B2046]", "text-white");
+      btn.classList.remove("bg-gray-200", "text-gray-700");
+    } else {
+      btn.classList.remove("active", "bg-[#0B2046]", "text-white");
+      btn.classList.add("bg-gray-200", "text-gray-700");
+    }
+  });
+  renderProducts();
 }
 
-function renderProducts(){
-const grid=document.getElementById("productGrid");
-const search=document.getElementById("searchInput").value.toLowerCase();
+function renderProducts() {
+  const grid = document.getElementById("productGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
-grid.innerHTML="";
+  grid.innerHTML = "";
 
-products
-.filter(p=> (category==="all"||p.category===category) && p.name.toLowerCase().includes(search))
-.forEach(p=>{
+  const filtered = products.filter(p =>
+    (category === "all" || p.category === category) &&
+    p.name.toLowerCase().includes(search)
+  );
 
-grid.innerHTML+=`
-<div class="card bg-white rounded-3xl p-6">
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="col-span-4 text-center py-20 text-gray-400">
+      <i class="fa-solid fa-box-open text-5xl mb-4 block"></i>
+      <p class="font-semibold">No se encontraron productos</p>
+    </div>`;
+    return;
+  }
 
-<div class="h-52 bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden">
-${p.image.includes("http")
-? `<img src="${p.image}" class="w-full h-full object-cover">`
-: `<i class="fa-solid fa-box text-6xl text-gray-300"></i>`}
-</div>
+  filtered.forEach(p => {
+    grid.innerHTML += `
+    <div class="card bg-white rounded-3xl p-6 flex flex-col">
 
-<div class="mt-5">
-<span class="text-xs font-bold text-gray-400">Código: \`${p.code}\`</span>
-<span class="badge bg-gray-100 text-gray-700">${p.tag}</span>
+      <div class="h-52 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden">
+        ${p.image.includes("http")
+          ? `<img src="${p.image}" class="w-full h-full object-cover">`
+          : `<i class="fa-solid fa-flask text-6xl text-gray-300"></i>`}
+      </div>
 
-<h3 class="mt-2 font-black text-xl text-[#0B2046]">${p.name}</h3>
-<p class="text-sm text-gray-400">${p.size}</p>
-<p class="mt-3 text-3xl font-black text-[#0B2046]">${money(p.price)}</p>
-</div>
+      <div class="mt-5 flex-1">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-gray-400 font-mono">${p.code}</span>
+          <span class="text-xs font-bold bg-gray-100 text-gray-600 px-3 py-1 rounded-full">${p.tag}</span>
+        </div>
 
-<div class="grid grid-cols-2 gap-3 mt-5">
-<button onclick="addCart(${p.id})" class="bg-gray-100 py-3 rounded-2xl font-bold text-[#0B2046]">Agregar</button>
-<button onclick="buyNow(${p.id})" class="bg-[#0B2046] text-white py-3 rounded-2xl font-bold">Comprar</button>
-</div>
+        <h3 class="mt-2 font-black text-lg text-[#0B2046] leading-tight">${p.name}</h3>
+        <p class="text-sm text-gray-400 mt-1">${p.size}</p>
+        <p class="mt-3 text-2xl font-black text-[#0B2046]">${money(p.price)}</p>
+      </div>
 
-</div>`;
-});
+      <div class="grid grid-cols-2 gap-3 mt-5">
+        <button onclick="addCart(${p.id})"
+          title="Agregar al carrito"
+          class="bg-gray-100 hover:bg-gray-200 py-3 rounded-2xl font-bold text-[#0B2046] flex items-center justify-center gap-2 transition-colors">
+          <i class="fa-solid fa-cart-plus"></i>
+          <span class="text-sm">Agregar</span>
+        </button>
+        <button onclick="buyNow(${p.id})"
+          title="Comprar por WhatsApp"
+          class="bg-[#0B2046] hover:bg-[#0d2a5a] text-white py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-colors">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span class="text-sm">Comprar</span>
+        </button>
+      </div>
+
+    </div>`;
+  });
 }
 
-function addCart(id){
-const item=products.find(p=>p.id===id);
-const found=cart.find(i=>i.id===id);
+function addCart(id) {
+  const item = products.find(p => p.id === id);
+  const found = cart.find(i => i.id === id);
 
-if(found)found.qty++;
-else cart.push({...item,qty:1});
+  if (found) found.qty++;
+  else cart.push({ ...item, qty: 1 });
 
-updateCart();
+  updateCart();
 }
 
-function updateCart(){
-const wrap=document.getElementById("cartItems");
-const count=document.getElementById("cartCount");
-const totalBox=document.getElementById("cartTotal");
-
-wrap.innerHTML="";
-let qty=0;
-let total=0;
-
-cart.forEach(i=>{
-qty+=i.qty;
-total+=i.price*i.qty;
-
-wrap.innerHTML+=`
-<div class="border rounded-2xl p-4">
-<h4 class="font-bold text-[#0B2046]">${i.name}</h4>
-<p class="text-sm text-gray-400">Código: \`${i.code}\`</p>
-<p class="text-sm">Cantidad: ${i.qty}</p>
-</div>`;
-});
-
-count.innerText=qty;
-totalBox.innerText=money(total);
+function removeCartItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCart();
 }
 
-function toggleCart(){
-document.getElementById("cartDrawer").classList.toggle("open");
+function changeQty(id, delta) {
+  const found = cart.find(i => i.id === id);
+  if (!found) return;
+  found.qty += delta;
+  if (found.qty <= 0) {
+    cart = cart.filter(i => i.id !== id);
+  }
+  updateCart();
 }
 
-function buyNow(id){
-const p=products.find(i=>i.id===id);
-
-const msg=
-`Hola, deseo comprar:%0A%0A`+
-`*Producto:* ${p.name}%0A`+
-`*Código:* \`${p.code}\`%0A`+
-`*Precio:* ${money(p.price)}%0A%0A`+
-`> Solicito información de entrega`;
-
-window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+function clearCart() {
+  cart = [];
+  updateCart();
 }
 
-/* BOTÓN WHATSAPP PRINCIPAL (ENVÍA TODO EL CARRITO CON FORMATO) */
-function sendCartWhatsApp(){
+function updateCart() {
+  const wrap = document.getElementById("cartItems");
+  const count = document.getElementById("cartCount");
+  const totalBox = document.getElementById("cartTotal");
+  const unitsBox = document.getElementById("cartUnits");
 
-if(cart.length===0)return;
+  wrap.innerHTML = "";
+  let qty = 0;
+  let total = 0;
 
-let msg="*PEDIDO GOLDEN CLEAN*%0A%0A";
-let total=0;
+  if (cart.length === 0) {
+    wrap.innerHTML = `<div class="text-center py-16 text-gray-300">
+      <i class="fa-solid fa-cart-shopping text-5xl mb-4 block"></i>
+      <p class="font-semibold text-sm text-gray-400">Carrito vacio</p>
+    </div>`;
+  }
 
-cart.forEach((i,index)=>{
-msg+=`${index+1}. *${i.name}*%0A`;
-msg+=`- Código: \`${i.code}\`%0A`;
-msg+=`- Cantidad: ${i.qty}%0A`;
-msg+=`- Subtotal: ${money(i.price*i.qty)}%0A%0A`;
-total+=i.price*i.qty;
-});
+  cart.forEach(i => {
+    qty += i.qty;
+    total += i.price * i.qty;
 
-msg+=`*TOTAL:* ${money(total)}%0A%0A`;
-msg+=`> Confirmar pedido`;
+    wrap.innerHTML += `
+    <div class="cart-item-row">
+      <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
+        <i class="fa-solid fa-flask text-gray-400 text-sm"></i>
+      </div>
+      <div class="cart-item-info">
+        <p class="font-bold text-[#0B2046] text-sm leading-tight">${i.name}</p>
+        <p class="text-xs text-gray-400 font-mono">${i.code} &middot; ${i.size}</p>
+        <p class="text-sm font-bold text-[#0B2046] mt-1">${money(i.price * i.qty)}</p>
+        <div class="cart-item-controls">
+          <button class="qty-btn bg-gray-100" onclick="changeQty(${i.id}, -1)">
+            <i class="fa-solid fa-minus text-xs"></i>
+          </button>
+          <span class="font-bold text-sm w-6 text-center">${i.qty}</span>
+          <button class="qty-btn bg-gray-100" onclick="changeQty(${i.id}, 1)">
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+          <button class="qty-btn bg-red-50 ml-2" onclick="removeCartItem(${i.id})" title="Eliminar">
+            <i class="fa-solid fa-trash-can text-xs text-red-400"></i>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  });
 
-window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+  count.innerText = qty;
+  totalBox.innerText = money(total);
+  if (unitsBox) unitsBox.innerText = qty;
+}
+
+function toggleCart() {
+  const drawer = document.getElementById("cartDrawer");
+  const overlay = document.getElementById("overlay");
+  const waFloat = document.getElementById("waFloat");
+
+  const isOpen = drawer.classList.toggle("open");
+  overlay.classList.toggle("active", isOpen);
+  waFloat.classList.toggle("hidden-float", isOpen);
+}
+
+function buyNow(id) {
+  const p = products.find(i => i.id === id);
+
+  const msg =
+    `*GOLDEN CLEAN - COMPRA DIRECTA*%0A%0A` +
+    `1. *${p.name}*%0A` +
+    `   - Codigo: \`${p.code}\`%0A` +
+    `   - Presentacion: ${p.size}%0A` +
+    `   - Cantidad: 1%0A` +
+    `   - Subtotal: ${money(p.price)}%0A%0A` +
+    `---%0A%0A` +
+    `*RESUMEN DEL PEDIDO*%0A` +
+    `- Total productos: 1%0A` +
+    `- Total unidades: 1%0A` +
+    `- *TOTAL A PAGAR: ${money(p.price)}*%0A%0A` +
+    `---%0A%0A` +
+    `*DATOS DE ENTREGA*%0A` +
+    `- Nombre:%0A` +
+    `- Direccion:%0A` +
+    `- Telefono:%0A` +
+    `- Metodo de pago:%0A%0A` +
+    `> Por favor confirme disponibilidad y tiempo de entrega.`;
+
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
+}
+
+function sendCartWhatsApp() {
+  if (cart.length === 0) return;
+
+  let msg = `*PEDIDO GOLDEN CLEAN*%0A%0A`;
+  let total = 0;
+  let totalUnits = 0;
+
+  cart.forEach((i, index) => {
+    const subtotal = i.price * i.qty;
+    total += subtotal;
+    totalUnits += i.qty;
+
+    msg += `${index + 1}. *${i.name}*%0A`;
+    msg += `   - Codigo: \`${i.code}\`%0A`;
+    msg += `   - Presentacion: ${i.size}%0A`;
+    msg += `   - Cantidad: ${i.qty}%0A`;
+    msg += `   - Subtotal: ${money(subtotal)}%0A%0A`;
+  });
+
+  msg += `---%0A%0A`;
+  msg += `*RESUMEN DEL PEDIDO*%0A`;
+  msg += `- Total productos: ${cart.length}%0A`;
+  msg += `- Total unidades: ${totalUnits}%0A`;
+  msg += `- *TOTAL A PAGAR: ${money(total)}*%0A%0A`;
+  msg += `---%0A%0A`;
+  msg += `*DATOS DE ENTREGA*%0A`;
+  msg += `- Nombre:%0A`;
+  msg += `- Direccion:%0A`;
+  msg += `- Telefono:%0A`;
+  msg += `- Metodo de pago:%0A%0A`;
+  msg += `> Por favor confirme disponibilidad y tiempo de entrega.`;
+
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
 }
 
 renderProducts();
