@@ -1,431 +1,426 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden Clean | Catálogo Digital</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <!-- CONFIGURACIÓN DE IMÁGENES Y SEO (WhatsApp/Redes) -->
-    <!-- Reemplaza las URLs por tus enlaces reales de Google Drive o Hosting -->
-    <link rel="icon" href="https://golden-clean.inglucas.com.co/data/media/favicon.ico" type="image/x-icon">
-    <meta property="og:image" content="https://golden-clean.inglucas.com.co/data/media/logo.jpeg">
-    <meta property="og:title" content="Golden Clean - Productos de Limpieza">
-    <meta property="og:description" content="Haz tu pedido por WhatsApp. Soluciones integrales de limpieza para Hogar, Negocios y Revendedores.">
-    <meta property="og:type" content="website">
+<title>Golden Clean | Productos de Limpieza en Meta, Villavicencio y Alrededores</title>
+<meta name="description" content="Golden Clean ofrece productos premium de limpieza para hogares, empresas y distribuidores en Villavicencio, Meta y alrededores. Atención rápida por WhatsApp.">
 
-    <style>
-        :root {
-            --primary: #0B2046; /* Azul Oscuro Golden */
-            --gold: #D4AF37;    /* Dorado Golden */
-            --white: #FFFFFF;
-            --light: #F4F7F9;
-            --text: #1A1A1A;
-        }
+<link rel="icon" type="image/x-icon" href="https://golden-clean.inglucas.com.co/data/media/favicon.ico">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background: var(--light); color: var(--text); overflow-x: hidden; }
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Golden Clean | Limpieza Profesional en Meta">
+<meta property="og:description" content="Productos premium de limpieza para hogar, empresa y distribuidores en Villavicencio, Meta y alrededores. Cotiza por WhatsApp.">
+<meta property="og:image" content="https://golden-clean.inglucas.com.co/data/media/logo.jpeg">
+<meta property="og:url" content="https://golden-clean.inglucas.com.co/">
 
-        /* --- ANIMACIÓN DE BURBUJAS --- */
-        .foam-bg {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 0;
-        }
-        .bubble {
-            position: absolute; bottom: -100px; background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
-            animation: float 8s infinite ease-in;
-        }
-        @keyframes float {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
-        }
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Golden Clean | Limpieza Profesional en Meta">
+<meta name="twitter:description" content="Productos de limpieza premium con cobertura en Villavicencio, Meta y alrededores.">
+<meta name="twitter:image" content="https://golden-clean.inglucas.com.co/data/media/logo.jpeg">
 
-        /* --- ONBOARDING --- */
-        #onboarding {
-            position: fixed; inset: 0; background: var(--primary); display: flex;
-            justify-content: center; align-items: center; z-index: 1000; transition: 0.5s;
-        }
-        .onboarding-card {
-            background: var(--white); padding: 2.5rem; border-radius: 20px; width: 90%;
-            max-width: 450px; text-align: center; position: relative; z-index: 10;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-        .logo-placeholder { width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; }
-        .onboarding-card h2 { color: var(--primary); margin-bottom: 0.5rem; font-weight: 800; }
-        .form-group { margin: 1.5rem 0; text-align: left; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 0.9rem; border: 2px solid #E1E1E1; border-radius: 10px; font-size: 1rem;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* --- HEADER & BÚSQUEDA --- */
-        header {
-            background: var(--primary); color: var(--white); padding: 1rem;
-            position: sticky; top: 0; z-index: 100;
-        }
-        .header-main { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo-text { font-weight: 800; font-size: 1.4rem; color: var(--gold); letter-spacing: 1px; }
-        
-        .search-container { max-width: 1200px; margin: 1rem auto 0; position: relative; }
-        .search-container input {
-            width: 100%; padding: 0.8rem 1rem 0.8rem 3rem; border: none; border-radius: 12px;
-            background: rgba(255,255,255,0.15); color: var(--white); font-size: 1rem;
-        }
-        .search-container input::placeholder { color: rgba(255,255,255,0.6); }
-        .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); fill: var(--gold); }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
 
-        /* --- PRODUCTOS --- */
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .categories { display: flex; gap: 0.8rem; overflow-x: auto; padding-bottom: 1rem; margin-bottom: 2rem; }
-        .cat-tag {
-            padding: 0.6rem 1.2rem; background: var(--white); border: 2px solid var(--primary);
-            color: var(--primary); border-radius: 50px; cursor: pointer; white-space: nowrap; font-weight: 600;
-        }
-        .cat-tag.active { background: var(--primary); color: var(--gold); }
+:root{
+--blue:#0B2046;
+--gold:#D4AF37;
+--light:#F8F9FA;
+}
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .product-card {
-            background: var(--white); border-radius: 15px; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; display: flex; flex-direction: column;
-        }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-img { width: 100%; height: 220px; object-fit: cover; background: #EEE; }
-        .product-body { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .p-cat { color: var(--gold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .p-name { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 0.3rem 0; }
-        .p-size { font-size: 0.85rem; color: #666; margin-bottom: 0.8rem; }
-        .p-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 1.2rem; }
-        
-        /* --- BOTONES --- */
-        .btn {
-            padding: 0.8rem; border-radius: 10px; border: none; font-weight: 700;
-            cursor: pointer; transition: 0.3s; text-align: center; text-decoration: none; font-size: 0.9rem;
-        }
-        .btn-cart { background: var(--gold); color: var(--primary); margin-bottom: 0.5rem; }
-        .btn-direct { background: #25D366; color: var(--white); }
-        .btn-main { background: var(--primary); color: var(--gold); width: 100%; margin-top: 1rem; font-size: 1.1rem; }
+body{
+font-family:'Poppins',sans-serif;
+background:var(--light);
+scroll-behavior:smooth;
+}
 
-        /* --- CARRITO MODAL --- */
-        #cart-panel {
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; height: 100vh;
-            background: var(--white); z-index: 1001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-        }
-        #cart-panel.active { right: 0; }
-        .cart-header { background: var(--primary); color: var(--gold); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 1.5rem; }
-        .cart-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #EEE; padding-bottom: 1rem; }
-        .cart-total { padding: 1.5rem; background: var(--light); border-top: 2px solid var(--gold); }
-        
-        .cart-count-badge {
-            background: var(--gold); color: var(--primary); font-size: 0.7rem; font-weight: 800;
-            padding: 2px 6px; border-radius: 50%; position: absolute; top: -5px; right: -10px;
-        }
+.hero{
+background:linear-gradient(135deg,#0B2046 0%,#07142c 100%);
+}
 
-        /* --- ICONOS SVG --- */
-        .svg-icon { width: 22px; height: 22px; vertical-align: middle; }
-        
-        .hidden { display: none; }
-    </style>
+.card{
+transition:all .35s ease;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+.glass{
+background:rgba(255,255,255,.88);
+backdrop-filter:blur(14px);
+}
+
+#cartDrawer{
+position:fixed;
+top:0;
+right:-100%;
+width:100%;
+max-width:440px;
+height:100vh;
+background:#fff;
+z-index:999;
+transition:.45s ease;
+box-shadow:-20px 0 50px rgba(0,0,0,.12);
+display:flex;
+flex-direction:column;
+}
+
+#cartDrawer.open{ right:0; }
+
+.whatsapp-float{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:998;
+}
+
+.badge{
+font-size:11px;
+font-weight:700;
+padding:6px 12px;
+border-radius:999px;
+}
+
+.no-scroll::-webkit-scrollbar{ display:none; }
+
+@media(max-width:768px){
+.hero-title{font-size:36px;}
+}
+</style>
 </head>
+
 <body>
 
-    <!-- ONBOARDING -->
-    <div id="onboarding">
-        <div class="foam-bg" id="foam-container"></div>
-        <div class="onboarding-card">
-            <!-- REEMPLAZAR SRC CON TU LOGO -->
-            <img src="https://via.placeholder.com/150x150/0B2046/D4AF37?text=LOGO" alt="Golden Clean Logo" class="logo-placeholder">
-            <h2>Bienvenido</h2>
-            <p>Personaliza tu experiencia de compra</p>
-            
-            <div class="form-group">
-                <label>¿Cómo te llamas o cuál es tu negocio?</label>
-                <input type="text" id="input-name" placeholder="Ej: Supermercado El Éxito">
-            </div>
+<header class="bg-white sticky top-0 z-50 shadow-sm">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
 
-            <div class="form-group">
-                <label>Selecciona tu perfil de cliente:</label>
-                <select id="input-type">
-                    <option value="Hogar">Línea Hogar</option>
-                    <option value="Negocio">Mi Propio Negocio</option>
-                    <option value="Revendedor">Revendedor / Mayorista</option>
-                </select>
-            </div>
+<div class="flex items-center gap-3">
+<img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg" class="w-12 h-12 rounded-full border-2 border-yellow-500">
+<div>
+<h1 class="font-black text-xl text-[#0B2046]">GOLDEN CLEAN</h1>
+<p class="text-xs text-gray-400 font-semibold">Villavicencio, Meta y alrededores</p>
+</div>
+</div>
 
-            <button class="btn btn-main" onclick="initApp()">Empezar</button>
-        </div>
-    </div>
+<div class="hidden md:flex flex-1 max-w-md">
+<div class="relative w-full">
+<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+<input id="searchInput" onkeyup="renderProducts()" type="text" placeholder="Buscar producto..."
+class="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-3 outline-none">
+</div>
+</div>
 
-    <!-- HEADER -->
-    <header>
-        <div class="header-main">
-            <div class="logo-text">GOLDEN CLEAN</div>
-            <div style="position: relative; cursor: pointer;" onclick="toggleCart(true)">
-                <svg class="svg-icon" style="fill: var(--gold);" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                <span id="cart-badge" class="cart-count-badge">0</span>
-            </div>
-        </div>
-        <div class="search-container">
-            <svg class="svg-icon search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" id="search-input" placeholder="Buscar productos por nombre o características..." onkeyup="handleSearch()">
-        </div>
-    </header>
+<div class="flex items-center gap-3">
 
-    <main class="container">
-        <div id="user-welcome" style="margin-bottom: 1.5rem; font-weight: 600; color: var(--primary);"></div>
-        
-        <div class="categories" id="cat-list">
-            <button class="cat-tag active" onclick="filterByCat('Todos', this)">Todos</button>
-            <button class="cat-tag" onclick="filterByCat('Lavalozas', this)">Lavalozas</button>
-            <button class="cat-tag" onclick="filterByCat('Cuidado Ropa', this)">Cuidado Ropa</button>
-            <button class="cat-tag" onclick="filterByCat('Desinfectantes', this)">Desinfectantes</button>
-            <button class="cat-tag" onclick="filterByCat('Accesorios', this)">Accesorios</button>
-        </div>
+<a href="https://wa.me/573153544360" target="_blank"
+class="hidden md:flex bg-[#0B2046] text-white px-5 py-3 rounded-xl font-bold">
+WhatsApp
+</a>
 
-        <div class="product-grid" id="grid">
-            <!-- Dinámico -->
-        </div>
-    </main>
+<!-- BOTÓN WHATSAPP DIRECTO (ENVÍA CARRITO) -->
+<button onclick="sendCartWhatsApp()"
+class="bg-green-600 text-white px-4 py-3 rounded-xl font-bold">
+WhatsApp Pedido
+</button>
 
-    <!-- PANEL CARRITO -->
-    <div id="cart-panel">
-        <div class="cart-header">
-            <h3>Tu Pedido</h3>
-            <span style="cursor: pointer;" onclick="toggleCart(false)">Cerrar [X]</span>
-        </div>
-        <div class="cart-items" id="cart-list"></div>
-        <div class="cart-total">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 800;">
-                <span>Total:</span>
-                <span id="cart-total-amount">$0</span>
-            </div>
-            <button class="btn btn-main" onclick="checkout()">Enviar pedido completo</button>
-        </div>
-    </div>
+<button onclick="toggleCart()"
+class="relative bg-[#0B2046] text-white w-12 h-12 rounded-2xl">
+<i class="fa-solid fa-cart-shopping"></i>
+<span id="cartCount"
+class="absolute -top-2 -right-2 bg-[#D4AF37] text-[#0B2046] text-xs font-black w-6 h-6 rounded-full flex items-center justify-center">0</span>
+</button>
 
-    <script>
-        const WHATSAPP_NUMBER = "573153544360";
-        let userData = JSON.parse(localStorage.getItem('gc_user')) || null;
-        let cart = JSON.parse(localStorage.getItem('gc_cart')) || [];
-        let currentCat = "Todos";
+</div>
+</div>
+</header>
 
-        // --- PRODUCTOS ---
-        const products = [
-            { id: 1, name: "Lavaloza Líquido", cat: "Lavalozas", size: "500ml", price: 5500, features: "Antibacterial, aroma limón", img: "https://via.placeholder.com/300x220/EEE/0B2046?text=LAVALOZA+500" },
-            { id: 2, name: "Lavaloza Galón", cat: "Lavalozas", size: "4000ml", price: 28000, features: "Arranca grasa industrial", img: "https://via.placeholder.com/300x220/EEE/0B2046?text=LAVALOZA+GALON" },
-            { id: 3, name: "Detergente Ropa", cat: "Cuidado Ropa", size: "2000ml", price: 18000, features: "Protección de color", img: "https://via.placeholder.com/300x220/EEE/0B2046?text=DETERGENTE" },
-            { id: 4, name: "Desinfectante Pino", cat: "Desinfectantes", size: "1000ml", price: 7500, features: "Elimina 99.9% bacterias", img: "https://via.placeholder.com/300x220/EEE/0B2046?text=DESINFECTANTE" },
-            { id: 5, name: "Trapeador Microfibra", cat: "Accesorios", size: "Unidad", price: 12000, features: "Súper absorbente", img: "https://via.placeholder.com/300x220/EEE/0B2046?text=TRAPEADOR" }
-        ];
+<section class="hero text-white">
+<div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
 
-        // --- INICIALIZACIÓN ---
-        window.onload = () => {
-            createBubbles();
-            if(userData) {
-                document.getElementById('onboarding').style.display = 'none';
-                renderUI();
-            }
-        };
+<div>
+<div class="badge bg-white text-[#0B2046] inline-block">
+Calidad Profesional
+</div>
 
-        // Prevenir cierre
-        window.onbeforeunload = (e) => {
-            if(cart.length > 0) {
-                e.preventDefault();
-                return "Tienes productos en el carrito. ¿Seguro que quieres salir?";
-            }
-        };
+<h2 class="hero-title text-5xl font-black mt-6 leading-tight">
+Soluciones de Limpieza para Hogar, Industria y Mayoristas
+</h2>
 
-        function createBubbles() {
-            const container = document.getElementById('foam-container');
-            for(let i=0; i<15; i++) {
-                const b = document.createElement('div');
-                b.className = 'bubble';
-                let size = Math.random() * 60 + 20;
-                b.style.width = size + 'px';
-                b.style.height = size + 'px';
-                b.style.left = Math.random() * 100 + '%';
-                b.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                b.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(b);
-            }
-        }
+<p class="mt-6 text-white/80 text-lg">
+Atendemos Villavicencio, Meta y alrededores.
+</p>
 
-        function initApp() {
-            const name = document.getElementById('input-name').value.trim();
-            const type = document.getElementById('input-type').value;
-            if(!name) return alert("Por favor, ingresa tu nombre o negocio.");
-            
-            userData = { name, type };
-            localStorage.setItem('gc_user', JSON.stringify(userData));
-            document.getElementById('onboarding').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('onboarding').style.display = 'none';
-                renderUI();
-            }, 500);
-        }
+</div>
 
-        function renderUI() {
-            document.getElementById('user-welcome').innerText = `Catálogo para: ${userData.name} (${userData.type})`;
-            renderProducts();
-            updateCartCount();
-        }
+<div class="glass rounded-3xl p-10 text-center">
+<img src="https://golden-clean.inglucas.com.co/data/media/logo.jpeg"
+class="w-60 h-60 rounded-full mx-auto border-4 border-yellow-500">
+</div>
 
-        // --- LÓGICA DE PRECIOS ---
-        function getPrice(p, qty = 1) {
-            let finalPrice = p.price;
-            // 1. Si es revendedor, precio especial (ej: -20%)
-            if(userData.type === "Revendedor") {
-                finalPrice = p.price * 0.80;
-            } 
-            // 2. Si compra más de 6 unidades (Hogar/Negocio), precio mayorista (ej: -15%)
-            else if(qty >= 6) {
-                finalPrice = p.price * 0.85;
-            }
-            return Math.round(finalPrice);
-        }
+</div>
+</section>
 
-        // --- RENDERIZADO ---
-        function renderProducts(search = "") {
-            const grid = document.getElementById('grid');
-            grid.innerHTML = "";
-            
-            const filtered = products.filter(p => {
-                const matchCat = currentCat === "Todos" || p.cat === currentCat;
-                const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || 
-                                    p.features.toLowerCase().includes(search.toLowerCase());
-                return matchCat && matchSearch;
-            });
+<!-- CATEGORÍAS -->
+<section class="py-10">
+<div class="max-w-7xl mx-auto px-6 text-center">
 
-            filtered.forEach(p => {
-                const pPrice = getPrice(p);
-                grid.innerHTML += `
-                    <div class="product-card">
-                        <img src="${p.img}" class="product-img" alt="${p.name}">
-                        <div class="product-body">
-                            <span class="p-cat">${p.cat}</span>
-                            <h3 class="p-name">${p.name}</h3>
-                            <p class="p-size">Tamaño: ${p.size} | ${p.features}</p>
-                            <p class="p-price">$${pPrice.toLocaleString('es-CO')}</p>
-                            <button class="btn btn-cart" onclick="addToCart(${p.id})">Añadir al Carrito</button>
-                            <button class="btn btn-direct" onclick="directOrder(${p.id})">Pedir ahora</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+<div class="flex flex-wrap justify-center gap-4">
 
-        function handleSearch() {
-            renderProducts(document.getElementById('search-input').value);
-        }
+<button onclick="setCategory('all')" class="bg-[#0B2046] text-white px-6 py-2 rounded-xl font-bold">Todos</button>
+<button onclick="setCategory('hogar')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Hogar</button>
+<button onclick="setCategory('industrial')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Industrial</button>
+<button onclick="setCategory('mayoristas')" class="bg-gray-200 px-6 py-2 rounded-xl font-bold">Mayoristas</button>
 
-        function filterByCat(cat, el) {
-            currentCat = cat;
-            document.querySelectorAll('.cat-tag').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            renderProducts();
-        }
+</div>
 
-        // --- CARRITO ---
-        function addToCart(id) {
-            const prod = products.find(p => p.id === id);
-            const inCart = cart.find(i => i.id === id);
-            if(inCart) inCart.qty++;
-            else cart.push({...prod, qty: 1});
-            
-            saveCart();
-            updateCartCount();
-        }
+</div>
+</section>
 
-        function saveCart() {
-            localStorage.setItem('gc_cart', JSON.stringify(cart));
-        }
+<section class="py-20">
+<div class="max-w-7xl mx-auto px-6">
 
-        function updateCartCount() {
-            const count = cart.reduce((acc, i) => acc + i.qty, 0);
-            document.getElementById('cart-badge').innerText = count;
-        }
+<div id="productGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
 
-        function toggleCart(show) {
-            const panel = document.getElementById('cart-panel');
-            if(show) {
-                renderCartList();
-                panel.classList.add('active');
-            } else {
-                panel.classList.remove('active');
-            }
-        }
+</div>
+</section>
 
-        function renderCartList() {
-            const list = document.getElementById('cart-list');
-            list.innerHTML = "";
-            let total = 0;
+<!-- FOOTER (RESTAURADO COMO PEDISTE) -->
+<footer class="bg-[#0B2046] text-white py-12">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
 
-            cart.forEach(item => {
-                const unitPrice = getPrice(item, item.qty);
-                const subtotal = unitPrice * item.qty;
-                total += subtotal;
+<div>
+<h3 class="font-black text-xl">Golden Clean</h3>
+<p class="text-sm text-white/70 mt-3">
+Villavicencio, Meta y alrededores.
+</p>
+</div>
 
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <div style="flex-grow: 1;">
-                            <div style="font-weight: 700;">${item.name}</div>
-                            <div style="font-size: 0.8rem; color: #666;">Precio: $${unitPrice.toLocaleString('es-CO')} c/u</div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <button onclick="updateQty(${item.id}, -1)" class="btn" style="padding: 2px 8px; background: #DDD;">-</button>
-                            <span>${item.qty}</span>
-                            <button onclick="updateQty(${item.id}, 1)" class="btn" style="padding: 2px 8px; background: #DDD;">+</button>
-                        </div>
-                    </div>
-                `;
-            });
+<div>
+<h3 class="font-black">Cobertura</h3>
+<p class="text-sm text-white/70 mt-3">
+Villavicencio, Acacías, Restrepo, Cumaral y municipios cercanos.
+</p>
+</div>
 
-            document.getElementById('cart-total-amount').innerText = `$${total.toLocaleString('es-CO')}`;
-        }
+<div>
+<h3 class="font-black">Horario</h3>
+<p class="text-sm text-white/70 mt-3">
+Lunes a Sábado<br>8:00 AM - 6:00 PM
+</p>
+</div>
 
-        function updateQty(id, change) {
-            const item = cart.find(i => i.id === id);
-            item.qty += change;
-            if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
-            saveCart();
-            updateCartCount();
-            renderCartList();
-        }
+</div>
+</footer>
 
-        // --- WHATSAPP ETIQUETAS ---
-        function generateMessage(items, total) {
-            let msg = `*NUEVO PEDIDO - GOLDEN CLEAN*\n\n`;
-            msg += `_Cliente:_ *${userData.name}*\n`;
-            msg += `_Perfil:_ *${userData.type}*\n`;
-            msg += `--------------------------------\n`;
-            
-            items.forEach(i => {
-                const price = getPrice(i, i.qty);
-                msg += `• *${i.qty}x* ${i.name} (${i.size})\n`;
-                msg += `  Subtotal: ~$${(price * i.qty).toLocaleString('es-CO')}~\n`;
-            });
+<!-- CART -->
+<div id="cartDrawer">
 
-            msg += `--------------------------------\n`;
-            msg += `*TOTAL ESTIMADO: $${total.toLocaleString('es-CO')}*\n\n`;
-            msg += `_Quedo atento a la confirmación de disponibilidad._`;
-            return encodeURIComponent(msg);
-        }
+<div class="p-6 bg-[#0B2046] text-white flex justify-between items-center">
+<div>
+<h3 class="font-black text-2xl">Carrito</h3>
+<p class="text-xs text-white/70">Pedido Golden Clean</p>
+</div>
 
-        function checkout() {
-            if(cart.length === 0) return;
-            const total = cart.reduce((acc, i) => acc + (getPrice(i, i.qty) * i.qty), 0);
-            const msg = generateMessage(cart, total);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-        }
+<button onclick="toggleCart()" class="w-10 h-10 rounded-xl bg-white/10">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
 
-        function directOrder(id) {
-            const p = products.find(prod => prod.id === id);
-            const total = getPrice(p, 1);
-            const msg = generateMessage([{...p, qty: 1}], total);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-        }
+<div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4 no-scroll"></div>
 
-    </script>
+<div class="p-6 border-t">
+<div class="flex justify-between mb-4">
+<span class="font-semibold">Total</span>
+<span id="cartTotal" class="font-black text-2xl text-[#0B2046]">$0</span>
+</div>
+
+<button onclick="sendCartWhatsApp()"
+class="w-full bg-green-600 text-white py-4 rounded-2xl font-black">
+Enviar Pedido
+</button>
+</div>
+
+</div>
+
+<script>
+const WHATSAPP="573153544360";
+
+let cart=[];
+let category="all";
+
+const products=[
+{
+id:1,
+code:"GC-001",
+name:"Lavaloza Limón",
+size:"500 ml",
+price:5800,
+tag:"Más vendido",
+category:"hogar",
+image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
+},
+{
+id:2,
+code:"GC-002",
+name:"Desinfectante Galón",
+size:"4000 ml",
+price:24000,
+tag:"Empresas",
+category:"industrial",
+image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
+},
+{
+id:3,
+code:"GC-003",
+name:"Jabón Manos Avena",
+size:"850 ml",
+price:9200,
+tag:"Premium",
+category:"hogar",
+image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
+},
+{
+id:4,
+code:"GC-004",
+name:"Trapeador Microfibra",
+size:"Unidad",
+price:16500,
+tag:"Mayoristas",
+category:"mayoristas",
+image:"PEGA_LINK_GOOGLE_DRIVE_AQUI"
+}
+];
+
+function money(v){
+return "$"+v.toLocaleString("es-CO");
+}
+
+function setCategory(c){
+category=c;
+renderProducts();
+}
+
+function renderProducts(){
+const grid=document.getElementById("productGrid");
+const search=document.getElementById("searchInput").value.toLowerCase();
+
+grid.innerHTML="";
+
+products
+.filter(p=> (category==="all"||p.category===category) && p.name.toLowerCase().includes(search))
+.forEach(p=>{
+
+grid.innerHTML+=`
+<div class="card bg-white rounded-3xl p-6">
+
+<div class="h-52 bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden">
+${p.image.includes("http")
+? `<img src="${p.image}" class="w-full h-full object-cover">`
+: `<i class="fa-solid fa-box text-6xl text-gray-300"></i>`}
+</div>
+
+<div class="mt-5">
+<span class="text-xs font-bold text-gray-400">Código: \`${p.code}\`</span>
+<span class="badge bg-gray-100 text-gray-700">${p.tag}</span>
+
+<h3 class="mt-2 font-black text-xl text-[#0B2046]">${p.name}</h3>
+<p class="text-sm text-gray-400">${p.size}</p>
+<p class="mt-3 text-3xl font-black text-[#0B2046]">${money(p.price)}</p>
+</div>
+
+<div class="grid grid-cols-2 gap-3 mt-5">
+<button onclick="addCart(${p.id})" class="bg-gray-100 py-3 rounded-2xl font-bold text-[#0B2046]">Agregar</button>
+<button onclick="buyNow(${p.id})" class="bg-[#0B2046] text-white py-3 rounded-2xl font-bold">Comprar</button>
+</div>
+
+</div>`;
+});
+}
+
+function addCart(id){
+const item=products.find(p=>p.id===id);
+const found=cart.find(i=>i.id===id);
+
+if(found)found.qty++;
+else cart.push({...item,qty:1});
+
+updateCart();
+}
+
+function updateCart(){
+const wrap=document.getElementById("cartItems");
+const count=document.getElementById("cartCount");
+const totalBox=document.getElementById("cartTotal");
+
+wrap.innerHTML="";
+let qty=0;
+let total=0;
+
+cart.forEach(i=>{
+qty+=i.qty;
+total+=i.price*i.qty;
+
+wrap.innerHTML+=`
+<div class="border rounded-2xl p-4">
+<h4 class="font-bold text-[#0B2046]">${i.name}</h4>
+<p class="text-sm text-gray-400">Código: \`${i.code}\`</p>
+<p class="text-sm">Cantidad: ${i.qty}</p>
+</div>`;
+});
+
+count.innerText=qty;
+totalBox.innerText=money(total);
+}
+
+function toggleCart(){
+document.getElementById("cartDrawer").classList.toggle("open");
+}
+
+function buyNow(id){
+const p=products.find(i=>i.id===id);
+
+const msg=
+`Hola, deseo comprar:%0A%0A`+
+`*Producto:* ${p.name}%0A`+
+`*Código:* \`${p.code}\`%0A`+
+`*Precio:* ${money(p.price)}%0A%0A`+
+`> Solicito información de entrega`;
+
+window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+}
+
+/* BOTÓN WHATSAPP PRINCIPAL (ENVÍA TODO EL CARRITO CON FORMATO) */
+function sendCartWhatsApp(){
+
+if(cart.length===0)return;
+
+let msg="*PEDIDO GOLDEN CLEAN*%0A%0A";
+let total=0;
+
+cart.forEach((i,index)=>{
+msg+=`${index+1}. *${i.name}*%0A`;
+msg+=`- Código: \`${i.code}\`%0A`;
+msg+=`- Cantidad: ${i.qty}%0A`;
+msg+=`- Subtotal: ${money(i.price*i.qty)}%0A%0A`;
+total+=i.price*i.qty;
+});
+
+msg+=`*TOTAL:* ${money(total)}%0A%0A`;
+msg+=`> Confirmar pedido`;
+
+window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+}
+
+renderProducts();
+</script>
+
 </body>
 </html>
