@@ -7,16 +7,14 @@
 <title>Golden Clean | Productos de Limpieza en Meta, Villavicencio y Alrededores</title>
 <meta name="description" content="Golden Clean ofrece productos premium de limpieza para hogares, empresas y distribuidores en Villavicencio, Meta y alrededores. Atención rápida por WhatsApp.">
 
-<link rel="icon" type="image/x-icon" href="https://golden-clean.inglucas.com.co/data/media/favicon.ico">
+<link rel="icon" type="image/x-icon" href="data/media/favicon.ico">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Golden Clean | Limpieza Profesional en Meta">
 <meta property="og:description" content="Productos premium de limpieza para hogar, empresa y distribuidores en Villavicencio, Meta y alrededores. Cotiza por WhatsApp.">
 <meta property="og:image" content="https://golden-clean.inglucas.com.co/data/media/logo.jpeg">
 <meta property="og:url" content="https://golden-clean.inglucas.com.co/">
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Golden Clean | Limpieza Profesional en Meta">
 <meta name="twitter:description" content="Productos de limpieza premium con cobertura en Villavicencio, Meta y alrededores.">
@@ -170,7 +168,6 @@ body{
 
 <body>
 
-<!-- OVERLAY PARA CERRAR CARRITO -->
 <div id="overlay" class="overlay" onclick="toggleCart()"></div>
 
 <header class="bg-white sticky top-0 z-50 shadow-sm">
@@ -229,14 +226,13 @@ body{
     </div>
 
     <div class="glass rounded-3xl p-10 text-center">
-      <img src="/data/media/logo.jpeg"
+      <img src="data/media/logo.jpeg"
         class="w-60 h-60 rounded-full mx-auto border-4 border-yellow-500">
     </div>
 
   </div>
 </section>
 
-<!-- CATEGORÍAS -->
 <section class="py-10">
   <div class="max-w-7xl mx-auto px-6 text-center">
 
@@ -264,7 +260,6 @@ body{
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-[#0B2046] text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
 
@@ -292,7 +287,6 @@ body{
   </div>
 </footer>
 
-<!-- BOTÓN FLOTANTE WHATSAPP (único, se oculta si carrito está abierto) -->
 <div class="whatsapp-float" id="waFloat">
   <a href="https://wa.me/573153544360" target="_blank"
     class="flex items-center justify-center w-14 h-14 bg-green-500 text-white rounded-full shadow-xl hover:bg-green-600 transition-colors">
@@ -300,7 +294,6 @@ body{
   </a>
 </div>
 
-<!-- CART DRAWER -->
 <div id="cartDrawer">
 
   <div class="p-6 bg-[#0B2046] text-white flex justify-between items-center">
@@ -356,7 +349,7 @@ const products = [
     price: 28000,
     tag: "Mas vendido",
     category: "Industria",
-    image: "/data/portafolio/clorox20L.png"
+    image: "data/portafolio/clorox20L.png"
   },
   {
     id: 2,
@@ -366,10 +359,8 @@ const products = [
     price: 28000,
     tag: "Mas vendido",
     category: "Industria",
-    // Usa siempre /uc?id= para visualizar
-    image: "/data/portafolio/clorox20L.png" 
+    image: "data/portafolio/clorox20L.png" 
   },
-  // Repite esto para los otros productos con sus respectivos IDs
   {
     id: 3,
     code: "GC-003",
@@ -434,7 +425,7 @@ function renderProducts() {
     <div class="card bg-white rounded-3xl p-6 flex flex-col">
 
       <div class="h-52 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden">
-        ${p.image.includes("http")
+        ${p.image !== "PEGA_LINK_GOOGLE_DRIVE_AQUI" 
           ? `<img src="${p.image}" class="w-full h-full object-cover">`
           : `<i class="fa-solid fa-flask text-6xl text-gray-300"></i>`}
       </div>
@@ -626,4 +617,3 @@ renderProducts();
 
 </body>
 </html>
-
